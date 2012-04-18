@@ -3,12 +3,13 @@
 searchBias.py
 Relevant algorithms used to decide search bias
 """
+from retrieveAgenda import *
 
-def getAverageIdleness(dayRange, user):
+def getAverageIdleness(dayRange, userID):
     sumIdleness = 0
     days = len(dayRange) # Number of days in dayRange
-    for dp in retriveAgenda(dayRange, user): # retriveAgenda() query database to get this user's Daily Periods within the dayRange
-        sumIdleness += getIdleness(dp, mlen) # sumIdleness is the sum of idleness for each day within the dayRange
+    for dailyperiod in retrieveAgenda(dayRange, userID): # retriveAgenda() query database to get this user's Daily Periods within the dayRange
+        sumIdleness += getIdleness(dailyperiod, mlen) # sumIdleness is the sum of idleness for each day within the dayRange
     averageIdleness = sumIdleness/days # Average Idleness
     return averageIdleness
 
@@ -16,7 +17,8 @@ def getSearchBias(dayRange, method, delimit=None, averageidle=None):
 # method = DAY_LENGTH | AVERAGE_IDLE
 # delimit = delimit_days | delimit_idleness
 # averageidle = averageIdleness
-    searchBias = "LINEAR_EARLY"
+
+    searchBias = "LINEAR_EARLY" # Default search bias
     
     if method == "DAY_LENGTH":
         if delimit == None:
@@ -36,4 +38,6 @@ def getSearchBias(dayRange, method, delimit=None, averageidle=None):
         
 
 if __name__ == "__main__":
-
+    dayRange = ['20120303']
+    userID = 1
+    print getAverageIdleness(dayRange,userID)
